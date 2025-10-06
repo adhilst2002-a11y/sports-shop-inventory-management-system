@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% if supplier %}Edit{% else %}Add{% endif %} Supplier</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>{% if supplier %}Edit{% else %}Add{% endif %} Supplier</h2>
+      <div class="row">
+        <a class="btn" href="/suppliers/">Back to Suppliers</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <form class="card" method="post">{% csrf_token %}
+      <label>Name</label>
+      <input name="name" value="{{ supplier.name|default:'' }}" required />
+      <label>Contact Person</label>
+      <input name="contact_person" value="{{ supplier.contact_person|default:'' }}" />
+      <label>Phone</label>
+      <input name="phone" value="{{ supplier.phone|default:'' }}" />
+      <label>Email</label>
+      <input name="email" type="email" value="{{ supplier.email|default:'' }}" />
+      <label>Address</label>
+      <input name="address" value="{{ supplier.address|default:'' }}" />
+      <div class="row" style="margin-top:10px;">
+        <button class="btn primary" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

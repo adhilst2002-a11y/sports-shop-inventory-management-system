@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Reports</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Reports</h2>
+      <div class="row">
+        <a class="btn" href="/">Dashboard</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="grid">
+      <div class="card"><b>Total Sales Amount:</b> {{ total_sales_amount }}</div>
+      <div class="card"><b>Total Purchases Cost:</b> {{ total_purchases_cost }}</div>
+    </div>
+    <div class="card">
+      <form method="get" class="row">
+        <label>Start</label>
+        <input type="date" name="start" value="{{ request.GET.start }}" />
+        <label>End</label>
+        <input type="date" name="end" value="{{ request.GET.end }}" />
+        <button class="btn primary" type="submit">Filter</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Inventory Snapshot</h3>
+      <table>
+        <thead><tr><th>Name</th><th>SKU</th><th>Stock</th><th>Unit Price</th></tr></thead>
+        <tbody>
+          {% for p in products %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.sku }}</td>
+            <td>{{ p.stock_quantity }}</td>
+            <td>{{ p.unit_price }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No products</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Recent Sales</h3>
+      <table>
+        <thead><tr><th>ID</th><th>Date</th><th>Product</th><th>Qty</th><th>Total</th><th>Invoice</th></tr></thead>
+        <tbody>
+          {% for s in recent_sales %}
+          <tr>
+            <td>{{ s.id }}</td>
+            <td>{{ s.sold_at }}</td>
+            <td>{{ s.product.name }}</td>
+            <td>{{ s.quantity }}</td>
+            <td>{{ s.quantity|floatformat:0|add:0|floatformat:0 }}</td>
+            <td><a class="btn" href="/sales/{{ s.id }}/invoice/">PDF</a></td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6">No sales yet</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
