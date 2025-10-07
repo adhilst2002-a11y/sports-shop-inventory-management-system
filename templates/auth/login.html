@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <div class="container" style="max-width:480px;">
+    <div class="card">
+      <h2>Sign in</h2>
+      {% if error %}<div style="color:#b30000;">{{ error }}</div>{% endif %}
+      <form method="post">{% csrf_token %}
+        <label>Username</label>
+        <input name="username" required />
+        <label>Password</label>
+        <input name="password" type="password" required />
+        <div class="row" style="margin-top:10px;">
+          <button class="btn primary" type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

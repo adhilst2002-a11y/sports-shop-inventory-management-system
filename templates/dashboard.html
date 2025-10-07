@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Sports Shop Dashboard</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Sports Shop Inventory</h2>
+      <div class="row">
+        <a class="btn" href="/products/">Products</a>
+        <a class="btn" href="/suppliers/">Suppliers</a>
+        <a class="btn" href="/purchases/add/">Add Purchase</a>
+        <a class="btn" href="/sales/add/">Add Sale</a>
+        <a class="btn" href="/reports/">Reports</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="grid">
+      <div class="card"><b>Total Products:</b> {{ totals.products }}</div>
+      <div class="card"><b>Total Suppliers:</b> {{ totals.suppliers }}</div>
+      <div class="card"><b>Total Stock Units:</b> {{ totals.stock_units }}</div>
+      <div class="card"><b>Total Sales:</b> {{ totals.sales }}</div>
+    </div>
+
+    <div class="card">
+      <form method="get" class="row">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search products by name or SKU" />
+        <button class="btn primary" type="submit">Search</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Low Stock Alerts</h3>
+      <table>
+        <thead><tr><th>Product</th><th>SKU</th><th>Stock</th><th>Threshold</th></tr></thead>
+        <tbody>
+          {% for p in low_stock %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.sku }}</td>
+            <td class="low">{{ p.stock_quantity }}</td>
+            <td>{{ p.low_stock_threshold }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="4">No low-stock items</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

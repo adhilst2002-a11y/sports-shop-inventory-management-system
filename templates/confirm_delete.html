@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Confirm Delete</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Confirm Delete</h2>
+      <div class="row">
+        <a class="btn" href="{{ back }}">Cancel</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <form class="card" method="post">{% csrf_token %}
+      <p>Are you sure you want to delete: <b>{{ object }}</b>?</p>
+      <button class="btn primary" type="submit">Yes, delete</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Products</title>
+  <style>{{ style|safe }}</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h2>Products</h2>
+      <div class="row">
+        <a class="btn" href="/">Dashboard</a>
+        <a class="btn primary" href="/products/add/">Add Product</a>
+      </div>
+    </div>
+  </header>
+  <div class="container">
+    <div class="card">
+      <form method="get" class="row">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search products by name or SKU" />
+        <button class="btn primary" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="card">
+      <table>
+        <thead><tr><th>Name</th><th>SKU</th><th>Category</th><th>Unit Price</th><th>Stock</th><th>Supplier</th><th></th></tr></thead>
+        <tbody>
+          {% for p in products %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ p.sku }}</td>
+            <td>{{ p.get_category_display }}</td>
+            <td>{{ p.unit_price }}</td>
+            <td>{% if p.is_low_stock %}<span class="low">{{ p.stock_quantity }}</span>{% else %}{{ p.stock_quantity }}{% endif %}</td>
+            <td>{{ p.supplier }}</td>
+            <td>
+              <a class="btn" href="/products/{{ p.id }}/edit/">Edit</a>
+              <a class="btn" href="/products/{{ p.id }}/delete/">Delete</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="7">No products found</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
